@@ -1,0 +1,43 @@
+### Create Access Code
+POST http://localhost:8080/api/createAccessCode
+Content-Type: application/json
+
+{
+  "phoneNumber": "+84901234567"
+}
+
+### Verify Access Code
+POST http://localhost:8080/api/verifyAccessCode
+Content-Type: application/json
+
+{
+  "phoneNumber": "+84901234567",
+  "code": "123456"
+}
+
+### Add Student
+POST http://localhost:8080/api/addStudent
+Content-Type: application/json
+
+{
+  "name": "Nguyen Van B",
+  "phone": "+84099484838",
+  "email": "nguyenvanb@example.com"
+}
+
+### Assign Lesson
+POST http://localhost:8080/api/assignLesson
+Content-Type: application/json
+
+{
+  "studentPhone": "+84099484838",
+  "title": "Lesson 2: JavaScript Where To",
+  "description": "In HTML, JavaScript code is inserted between <script> and </script> tags."
+}
+
+### Get All Students
+GET http://localhost:8080/api/students
+
+
+### Get Student Profile + Lessons
+GET http://localhost:8080/api/student/+84901234567
