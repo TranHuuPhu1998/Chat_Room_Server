@@ -1,12 +1,44 @@
 import { db } from "../config/firebase.js";
 
+
+export async function updateStudent(id, newStudent) {
+  try {
+    const docRef = db.collection('students').doc(id);
+    const snapshot = await docRef.get();
+
+    if(!snapshot.exists){
+      throw new Error("Student not found");
+    }
+
+    await docRef.update(newStudent)
+
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export async function deleteStudent(id) {
+  try {
+    const docRef = db.collection("students").doc(id);
+    const snapshot = await docRef.get();
+    
+    if (!snapshot.exists) {
+      throw new Error("Student not found");
+    }
+    
+    await docRef.delete();
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function addStudent({ name, phone, email, address }) {
     const newStudent = {
-        name,
-        phone,
-        email,
-        address,
-        createdAt: Date.now()
+      name,
+      phone,
+      email,
+      address,
+      createdAt: Date.now()
     };
 
     const docRef = await db.collection("students").add(newStudent);

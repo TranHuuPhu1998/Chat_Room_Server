@@ -1,5 +1,4 @@
-import { addStudent } from './studentService.js';
-import { getAllStudents } from './studentService.js';
+import { addStudent, getAllStudents, deleteStudent, updateStudent } from './studentService.js';
 
 class SocketService {
   constructor(io) {
@@ -9,6 +8,20 @@ class SocketService {
   // Handle new socket connection
   handleConnection(socket) {
     console.log('User connected:', socket.id);
+
+    // Handle update student event from client
+    socket.on('update-student', async (data) => {
+      const { id , newData } = data;
+      await updateStudent(id, newData);
+      this.io.emit('student-updated', { id, newData });
+    })
+
+    // Handle delete student event from client
+    socket.on('delete-student', async (data) => {
+      const { id } = data;
+      await deleteStudent(id);
+      this.io.emit('student-deleted', { id });
+    });
 
     // Handle send list of students event from client
     socket.on('get-list-of-students', async () => {
